@@ -1,0 +1,20 @@
+echo "Download windows files"
+wget -O W10X86.19H1.EN-US.ISO https://drive.google.com/uc?export=download&id=1--rFC7E0hu2GSYeiCA0OlLpiOT7nsYgA
+echo "Download ngrok"
+wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip > /dev/null 2>&1
+unzip ngrok-stable-linux-amd64.zip > /dev/null 2>&1
+read -p "Ctrl + V Authtoken: " CRP 
+./ngrok authtoken $CRP 
+nohup ./ngrok tcp 3388 &>/dev/null &
+echo Downloading File From akuh.net
+apt-get install qemu
+echo "Wait"
+echo "Starting Windows"
+echo RDP Address:
+curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"tcp:..([^"]*).*/\1/p'
+echo "Ctrl+C To Copy"
+echo "Wait 1-2 minute to finish bot"
+echo "Dont Close This Tab"
+echo "Please support akuh.net thank you"
+qemu-system-x86_64 -hda W10X86.19H1.EN-US.ISO -m 8G -smp cores=2 -net user,hostfwd=tcp::3388-:3389 -net nic -nographic
+sleep 43200
